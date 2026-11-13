@@ -94,7 +94,81 @@ git push
 
 Users then receive the new DarSIA version the next time they run the update script.
 
-## Example data
+## Example data and getting started
 
-Download the example data from the link above and unpack it into a local folder, e.g.
-`data/`. The data is not version controlled.
+### What is in this repository
+
+Two example experiments are included. Each folder holds the DarSIA config (a `.toml`
+file) and a `meta/` folder with the small metadata files DarSIA needs. The raw images
+are **not** part of this repository; they come from the download link at the top.
+
+| Folder    | Experiment       | Config            | `meta/` contents |
+|-----------|------------------|-------------------|------------------|
+| `co2/`    | CO2 injection (b049) | `co2/b049.toml`   | `imaging.csv`, `injection.csv`, `pt.csv`, `depth.csv`, `facies.csv`, `segmentation.png` |
+| `tracer/` | Tracer experiment (pt) | `tracer/pt.toml` | same as above |
+
+The `meta/` files are the imaging, injection, pressure/temperature, depth and facies
+protocols plus the labeled segmentation image of the rig.
+
+### 1. Get the images
+
+Download the images from the link at the top and unpack them somewhere on your machine,
+for example:
+
+```
+<some folder>/data/
+├── co2/      <- images of the CO2 experiment
+└── tracer/   <- images of the tracer experiment
+```
+
+The location is up to you. `data/` inside this repository is ignored by git, so it is a
+fine choice if you want to keep everything together.
+
+### 2. Start the GUI and open a config
+
+```bash
+uv run darsia
+```
+
+In the GUI, open the config file of the experiment you want to explore:
+`co2/b049.toml` or `tracer/pt.toml`. If DarSIA reports missing files, the paths in the
+config still need to be adapted (next step).
+
+### 3. Adapt the paths to your machine
+
+The shipped configs contain absolute paths from the original author's computer
+(`C:/Users/.../data/ff/...`), which will not exist on yours. Either edit the `.toml` file
+in a text editor, or change the fields in the GUI's settings panel. Update these entries
+(in the `.toml` file they appear in the sections shown):
+
+| Section / key | Set it to |
+|---|---|
+| `[data]` `folders` | the folder with your copy of the images |
+| `[data]` `baseline` | the baseline image (first image) inside that folder |
+| `[data]` `results` | an output folder of your choice (created by the Setup step) |
+| `[labeling]` `colored_image` | `meta/segmentation.png` of this experiment |
+| `[depth]` `measurements` | `meta/depth.csv` of this experiment |
+| `[facies]` `props` | `meta/facies.csv` of this experiment |
+| `[protocols]` `injection` | `meta/injection.csv` of this experiment |
+| `[protocols]` `pressure_temperature` | `meta/pt.csv` of this experiment |
+| `[protocols.imaging]` (key *and* value) | key: the image folder, value: `meta/imaging.csv` |
+| `[protocols.imaging_interval_seconds]` (`co2` only) | key: the image folder |
+
+Tips:
+- Use forward slashes (`C:/Users/me/data/co2`) or doubled backslashes in the `.toml`.
+- Absolute paths are safest. The `meta/` files live in this repository, e.g.
+  `<path to this repo>/co2/meta/imaging.csv`.
+- Keep the same image folder in `[data] folders` and in `[protocols.imaging]`.
+- Keep your edited config private if you do not want to commit machine-specific paths
+  (for example, work on a copy such as `co2/b049_local.toml`).
+
+### 4. Run the workflow
+
+With the paths adapted, follow the Setup → Calibration → Analysis steps in the GUI tabs
+(see the
+[DarSIA workflow docs](external/darsia/src/darsia/presets/workflows/doc/quickstart.md)).
+The same steps are available from the command line, e.g.:
+
+```bash
+uv run python -m darsia.presets.workflows.user_interface_setup --all --config co2/b049.toml
+```
