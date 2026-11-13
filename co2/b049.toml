@@ -1,0 +1,311 @@
+data_window = []
+data_time = []
+data_path = []
+color_range = []
+color_channel = []
+[[roi]]
+name = "water"
+shape = "label"
+corner_1 = [ 0.0, 0.0,]
+corner_2 = [ 0.0, 0.0,]
+label_index = 0
+
+[[data_interval]]
+name = "btb"
+start = "00:00:00"
+end = "00:04:00"
+step = "00:01:00"
+tol = "00:00:05"
+
+[[data_interval]]
+name = "baseline"
+start = "00:00:00"
+end = "00:00:00"
+num = 1
+tol = "00:00:01"
+
+[[format]]
+name = "jpg"
+type = "jpg"
+resolution = [ 1080, 1800,]
+cmap = "viridis"
+keep_ratio = true
+quality = 100
+
+[[color_path]]
+name = "color path"
+basis = "facies"
+reference_label = 2
+
+[restoration]
+active = true
+method = "volume_average"
+
+[image_porosity]
+active = false
+
+[data]
+folders = [ "C:/Users/jbo062/data/ff/b049",]
+format = "JPG"
+baseline = "C:/Users/jbo062/data/ff/b049/DSC12385.JPG"
+results = "C:/Users/jbo062/data/ff/b049/darsia"
+
+[physics]
+fluid = "co2"
+
+[rig]
+dim = "2"
+width = 0.97
+height = 0.54
+
+[labeling]
+rtol = 0.001
+ensure_connectivity = true
+unite_labels = []
+colored_image = "C:/Users/jbo062/data/ff/b049/darsia/meta/segmentation.png"
+
+[depth]
+measurements_mode = "constant"
+constant_depth = 0.01
+target_resolution = [ 20, 40,]
+measurements = "C:\\Users\\jbo062\\data\\ff\\b049\\darsia\\meta\\depth.csv"
+
+[protocols]
+imaging_mode = "interval"
+start_reference = "baseline"
+injection_mode = "constant"
+injection_rate_unit = "mL/min"
+injection_rate = 1.0
+injection_density = 0.0
+injection_coordinates = [ 0.0, 0.0,]
+pressure_temperature_mode = "constant"
+pressure_bar = 1.013
+temperature_celsius = 20.0
+injection = "C:\\Users\\jbo062\\data\\ff\\b049\\darsia\\meta\\injection.csv"
+pressure_temperature = "C:\\Users\\jbo062\\data\\ff\\b049\\darsia\\meta\\pt.csv"
+
+[download]
+skip_existing = true
+
+[facies]
+props = "C:/Users/jbo062/data/ff/b049/darsia/meta/facies.csv"
+
+[expert_knowledge]
+no_saturation_g = [ "water",]
+no_concentration_aq = [ "water",]
+
+[corrections]
+active = [ "curvature",]
+
+[restoration.options]
+rev_size = 0.005
+method = "chambolle"
+weight = 0.1
+max_num_iter = 200
+eps = 0.0002
+omega = 1.0
+regularization = 1.0
+
+[protocols.imaging]
+"C:/Users/jbo062/data/ff/b049" = "C:\\Users\\jbo062\\data\\ff\\b049\\darsia\\meta\\imaging.csv"
+
+[protocols.blacklist]
+
+[protocols.imaging_interval_seconds]
+"C:/Users/jbo062/data/ff/b049" = 60.0
+
+[corrections.drift]
+
+[corrections.color]
+
+[corrections.curvature]
+active = [ "crop",]
+
+[calibration.mass]
+mode = "manual"
+threshold = 0.2
+expert_knowledge = true
+mass_unit = "auto"
+time_unit = "auto"
+evaluation_mode = "linear"
+embedding = "color path"
+data_selection = [ "btb",]
+
+[calibration.color]
+embedding = "color path"
+data_selection = [ "btb",]
+baseline = [ "baseline",]
+
+[options.calibration]
+show_plots = true
+
+[options.setup]
+show_plots = false
+
+[options.preprocessing]
+show_plots = false
+
+[options.analysis]
+show_plots = false
+random_traverse = false
+stream_preview = true
+
+[options.helper]
+show_plots = false
+
+[analysis.segmentation]
+expert_knowledge = true
+data_selection = [ "btb",]
+formats = [ "jpg",]
+[[analysis.segmentation.config]]
+name = "CO2(aq)"
+label = "co2(aq)"
+mode = "concentration_aq"
+thresholds = [ 0.05, 0.5,]
+color = [ 0, 255, 0,]
+alpha = [ 0.7, 1.0,]
+linewidth = 10
+
+[analysis.segmentation.config.values]
+active = false
+"values.value_color" = "0, 0, 0"
+"values.value_size" = "0.5"
+"values.value_alpha" = "1.0"
+"values.value_density" = "0.35"
+"values.value_min_distance_px" = "40.0"
+"values.value_max_per_contour" = "3"
+[analysis.segmentation.config.contour_smoother_selection]
+active = true
+"contour_smoother_selection.contour_smoother_options.epsilon" = "0.01"
+"contour_smoother_selection.contour_smoother_options.use_ratio" = true
+"contour_smoother_selection.contour_smoother_options.sigma" = "2.0"
+"contour_smoother_selection.contour_smoother_options.window_length" = "21"
+"contour_smoother_selection.contour_smoother_options.polyorder" = "3"
+[[analysis.segmentation.config]]
+name = "CO2(g)"
+label = "co2(g)"
+mode = "saturation_g"
+thresholds = [ 0.05, 0.5,]
+color = [ 255, 0, 0,]
+alpha = [ 0.7, 1.0,]
+linewidth = 10
+
+[analysis.segmentation.config.values]
+active = false
+"values.value_color" = "0, 0, 0"
+"values.value_size" = "0.5"
+"values.value_alpha" = "1.0"
+"values.value_density" = "0.35"
+"values.value_min_distance_px" = "40.0"
+"values.value_max_per_contour" = "3"
+[analysis.segmentation.config.contour_smoother_selection]
+active = true
+"contour_smoother_selection.contour_smoother_options.epsilon" = "0.01"
+"contour_smoother_selection.contour_smoother_options.use_ratio" = true
+"contour_smoother_selection.contour_smoother_options.sigma" = "2.0"
+"contour_smoother_selection.contour_smoother_options.window_length" = "21"
+"contour_smoother_selection.contour_smoother_options.polyorder" = "3"
+
+[analysis.mass]
+export = [ "concentration_aq", "mass",]
+expert_knowledge = true
+data_selection = [ "btb",]
+formats = [ "jpg",]
+color = "color path"
+
+[analysis.volume]
+expert_knowledge = true
+
+[analysis.fingers]
+expert_knowledge = true
+config = []
+
+[analysis.thresholding]
+compute_extent = true
+expert_knowledge = true
+layers = []
+
+[analysis.cropping]
+
+[helper.roi]
+mode = "none"
+
+[helper.results]
+mode = "rescaled_mass"
+
+[helper.roi_viewer]
+
+[helper.color]
+
+[video.source]
+extensions = [ ".jpg", ".jpeg", ".png", ".bmp", ".tif", ".tiff",]
+recursive = false
+sorting = "protocols"
+
+[video.output]
+formats = [ "mp4",]
+fps = 6.0
+codec = "mp4v"
+quality = 95
+
+[video.overlay]
+show_elapsed_time = true
+elapsed_time_format = "Elapsed: {:.2f} h"
+show_note = true
+font_scale = 0.7
+text_color = [ 255, 255, 255,]
+thickness = 2
+line_spacing = 8
+position = [ 20, 20,]
+box_enabled = true
+box_color = [ 0, 0, 0,]
+box_alpha = 0.4
+box_padding = 10
+
+[corrections.curvature.crop]
+top_left = [ 3, 353,]
+bottom_left = [ 4437, 326,]
+bottom_right = [ 4409, 7686,]
+top_right = [ 9, 7680,]
+width = 0.97
+height = 0.54
+in_meters = true
+
+[calibration.mass.contour_smoother_selection]
+active = true
+type = "savitzky_golay"
+
+[calibration.mass.evaluation_options]
+kernel = "linear"
+gamma = 10.0
+shift = 1.0
+regularization = 1e-8
+
+[calibration.color.color_path]
+num_segments = 1
+resolution = 21
+calibration_mode = "manual"
+threshold_baseline = 0.0
+threshold_calibration = 0.0
+ignore_baseline_spectrum = "expanded"
+histogram_weighting = "threshold"
+
+[analysis.thresholding.legend]
+show = true
+font_scale = 0.7
+thickness = 2
+line_spacing = 8
+position = [ 20, 20,]
+text_color = [ 255, 255, 255,]
+box_enabled = true
+box_color = [ 0, 0, 0,]
+box_alpha = 0.4
+box_padding = 10
+
+[calibration.mass.contour_smoother_selection.contour_smoother_options]
+epsilon = 0.01
+closed = false
+use_ratio = true
+sigma = 2.0
+window_length = 21
+polyorder = 3

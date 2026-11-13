@@ -1,0 +1,4 @@
+id,name,porosity,permeability,swi CO2,krel_gas,1-Sg,krel_water,pc [mbar]
+0,water,0.4,Nan,Nan,Nan,Nan,Nan,Nan
+1,cap,0.4,Nan,Nan,Nan,Nan,Nan,Nan
+2,storage,0.4,Nan,Nan,Nan,Nan,Nan,Nan
